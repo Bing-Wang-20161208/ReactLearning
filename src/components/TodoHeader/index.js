@@ -2,10 +2,13 @@
 
 import React from 'react'
 
-export default function TodoHeader() {
+export default function TodoHeader(props) {
     return (
-        <h1>
-            todo header
-        </h1>
+        <>
+            <h1>
+                {props.dec}
+            </h1>
+            <p>{props.children}</p>
+        </>
     )
 }

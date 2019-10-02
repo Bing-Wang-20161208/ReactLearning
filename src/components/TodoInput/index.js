@@ -1,10 +1,50 @@
-import React, { Component } from 'react'
+//react里面通过ref获取组件或dom元素，要使用React.createRef方法来创建一个ref
+import React, { Component, createRef } from 'react'
 
 export default class TodoInput extends Component {
+    static defaultProps = { //添加默认的props值
+        btnText : "添加ADD"
+    }
+    constructor () {
+        super ();
+        this.state = {
+            inputValue : "",
+            placeholder : "请输入..."
+        }
+    }
+    handleValueChange = (e) => {
+        this.setState ({
+            inputValue : e.target.value // e.currentTarget.value,但是currentTarget会涉及到冒泡捕获
+        })
+    }
+    handleValueKey = (e) => {   //键盘鼠标事件使用e，其他设计元素节点使用e.target,需要冒泡捕获使用e.currentTarget
+        if ( e.keyCode === 13) {
+            this.handleAddClick();
+            // console.log(e, e.target, e.currentTarget);
+        }
+    }
+    handleAddClick = (e) => {
+        this.props.addTodo(this.state.inputValue);
+        // console.log(e);
+        // console.log(e.target);
+        // console.log(e.currentTarget);    
+        this.setState({
+            inputValue : ""
+        })
+    }
     render() {
         return (
             <div>
-                todo input
+                <input
+                    type="text"
+                    value = { this.state.inputValue }
+                    placeholder = { this.state.placeholder }
+                    onChange = { this.handleValueChange }
+                    onKeyUp = { this.handleValueKey }
+                />
+                <button
+                    onClick = {this.handleAddClick}
+                >{this.props.btnText}</button>
             </div>
         )
     }

@@ -20,6 +20,18 @@ class App extends Component {
             }]
         }
     }
+    onCompletedChange = (id) => {
+        this.setState ( (prevState) => {
+            return {
+                todos : prevState.todos.map ( todo => { 
+                    if (todo.id === id ) {
+                        todo.isCompleted = !todo.isCompleted
+                    }
+                    return todo;
+                })
+            }
+        })
+    }
     addTodo = (title) => {
         this.setState({
             todos : this.state.todos.concat(
@@ -41,7 +53,10 @@ class App extends Component {
                 <TodoInput
                     addTodo = {this.addTodo}
                 />
-                <TodoList todos = {this.state.todos} />
+                <TodoList
+                    todos = {this.state.todos}
+                    onCompletedChange = { this.onCompletedChange }    
+                />
                 <Like />
             </>
         )
